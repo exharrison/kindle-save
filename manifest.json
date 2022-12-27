@@ -1,0 +1,46 @@
+{
+    "manifest_version": 2,
+    "name": "Kindle Save For Later",
+    "version": "0.1.0",
+    "description": "Save Kindle books for later since Amazon won't implement a cart or wishlist...",
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/book16.png",
+            "24": "images/book24.png",
+            "32": "images/book32.png"
+        }
+    },
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Alt+Shift+1"
+            }
+        },
+        "duplicate-tab": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+2",
+                "mac": "Command+Shift+2"
+            },
+            "description": "Duplicates the current active tab because... why not?"
+        }
+    },
+    "background": {
+        "scripts": [ "background.js", "kindle-save.js", "page.service.js" ],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js", "kindle-save.js"],
+            "css": ["content.css"]
+        }
+    ],
+    "web_accessible_resources": [
+        "images/book32.png"
+    ],
+    "permissions": [
+        "tabs",
+        "storage"
+    ]
+}
