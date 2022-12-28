@@ -1,9 +1,9 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Kindle Save For Later",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Save Kindle books for later since Amazon won't implement a cart or wishlist...",
-    "browser_action": {
+    "action": {
         "default_popup": "popup.html",
         "default_icon": {
             "16": "images/book16.png",
@@ -12,32 +12,33 @@
         }
     },
     "commands": {
-        "_execute_browser_action": {
+        "_execute_action": {
             "suggested_key": {
                 "default": "Alt+Shift+1"
             }
         },
-        "duplicate-tab": {
+        "announce": {
             "suggested_key": {
-                "default": "Ctrl+Shift+2",
-                "mac": "Command+Shift+2"
+                "default": "Alt+Shift+3"
             },
-            "description": "Duplicates the current active tab because... why not?"
+            "description": "Announces the title at the bottom right of the current page"
         }
     },
     "background": {
-        "scripts": [ "background.js", "kindle-save.js", "page.service.js" ],
-        "persistent": false
+        "service_worker": "service-worker.js"
     },
     "content_scripts": [
         {
-            "matches": ["<all_urls>"],
+            "matches": ["https://www.amazon.com/*"],
             "js": ["content.js", "kindle-save.js"],
             "css": ["content.css"]
         }
     ],
     "web_accessible_resources": [
-        "images/book32.png"
+        {
+            "matches": ["<all_urls>"],
+            "resources": ["images/book32.png"]
+        }
     ],
     "permissions": [
         "tabs",

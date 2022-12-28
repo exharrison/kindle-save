@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         await PageService.clearPages();
         await displayPages();
     };
+
+    kindleSave.quiet();
 });
 
 const displayPages = async () => {

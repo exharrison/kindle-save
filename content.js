@@ -1,6 +1,6 @@
 // Notification body.
 const notification = document.createElement("div");
-notification.className = 'acho-notification';
+notification.className = 'kindle-save-notification';
 
 // Notification icon.
 const icon = document.createElement('img');
@@ -16,11 +16,11 @@ document.body.appendChild(notification);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
-    const notification = document.getElementsByClassName('acho-notification')[0];
+    const notification = document.getElementsByClassName('kindle-save-notification')[0];
     const notificationText = notification.getElementsByTagName('p')[0];
 
-    const acho = new Acho();
-    notificationText.innerHTML = acho.getBarkedTitle(request.tabTitle);
+    const kindleSave = new KindleSave();
+    notificationText.innerHTML = kindleSave.getSavedTitle(request.tabTitle);
 
     notification.style.display = 'flex';
 

@@ -16,13 +16,23 @@ class KindleSave {
     }
 
     /**
-     * Concatenates the tab title with Acho's barks.
+     * Displays title to be saved.
      * @param {String} tabTitle Current tab title
      * @returns {String} 
      */
     getSavedTitle = (tabTitle) => {
         const savedTitle = `Saving page for later: <br><b>${tabTitle}</b>`
         return savedTitle;
+    }
+
+    remind = () => {
+        chrome.action.setBadgeBackgroundColor({ color: '#EEE' }, () => {
+            chrome.action.setBadgeText({ text: 'Save?' });
+        });
+    }
+
+    quiet = () => {
+        chrome.action.setBadgeText({ text: '' });
     }
 
 }
