@@ -15,6 +15,7 @@ class PageService {
                     reject(chrome.runtime.lastError);
 
                 const researches = result.pages ?? [];
+                console.log("kindle-save[getPages]: " + researches);
                 resolve(researches);
             });
         });
@@ -25,8 +26,20 @@ class PageService {
     static savePage = async (title, asin) => {
         const pages = await this.getPages();
         
-        console.log("kindle-save: title " + title + " and asin " + asin);
-        const updatedPages = [...pages, { title, asin }];
+        console.log("kindle-save[savePage]: title " + title + " and asin " + asin);
+
+        var newItem = {title, asin};
+        pages.forEach(page => {
+            if(page != null && page.asin != null && page.asin == asin) {
+                newItem = null;
+                console.log("kindle-save[savePage]: found " + asin);
+                return;
+            }
+        });
+        if( newItem == null )
+            return;
+        console.log("kindle-save[savePage]: Adding " + asin);
+        const updatedPages = [...pages, newItem];
 
         const promise = toPromise((resolve, reject) => {
             chrome.storage.local.set({ [PAGES_KEY]: updatedPages }, () => {          
